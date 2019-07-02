@@ -11,12 +11,7 @@ npm install cms-module-server
 
 ## Usage
 
-To use this package, you will first need a environment variable containing a MongoDB URI pointing to your CMS database. To add this you will need to a `.env` file and install the [dotenv](https://www.npmjs.com/package/dotenv) package.
-
-The `.env` file should have a line like this:
-```dosini
-ADMIN_URI="mongodb://user:pwd@domain.com/db"
-```
+To use this package properly you will need to connect to a MongoDB server using the [mongoose](https://www.npmjs.com/package/mongoose) package.
 
 To call the save function with data from the client:
 ```js
