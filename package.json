@@ -28,5 +28,13 @@
     "eslint": "^5.16.0",
     "eslint-config-plazide": "^0.1.1"
   },
-  "description": ""
+  "description": "This package complements the [cms-module-client](https://www.npmjs.com/package/cms-module-client) package by adding functions in the server to render and save content provided from the client package.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plazide/cms-module-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Plazide/cms-module-server/issues"
+  },
+  "homepage": "https://github.com/Plazide/cms-module-server#readme"
 }
