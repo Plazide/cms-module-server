@@ -1,0 +1,7 @@
+{
+	"extends": ["plazide"],
+	"env": {
+		"node": true,
+		"browser": false
+	}
+}
