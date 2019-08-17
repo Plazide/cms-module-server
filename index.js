@@ -1,7 +1,7 @@
-const render = require("./functions/render");
-const save = require("./functions/save");
-const publish = require("./functions/publish");
-const upload = require("./functions/upload");
+const render = require("./controllers/render");
+const save = require("./controllers/save");
+const publish = require("./controllers/publish");
+const upload = require("./controllers/upload");
 
 module.exports = {
 	render,
