@@ -9,7 +9,7 @@ if(state !== connecting && state !== connected){
 	const uri = process.env.MONGODB_URI;
 
 	if(!uri)
-		throw new Error("Environment variable ADMIN_URI is not specified");
+		throw new Error("Environment variable MONGODB_URI is not specified");
 
 	// Connect to MongoDB
 	mongoose.connect(uri, { useNewUrlParser: true })
