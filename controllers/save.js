@@ -46,6 +46,7 @@ async function save(req, res, db){
 	console.log("Starting save...");
 	const saveHandler = new SaveHandler({ req, res });
 	const sections = await saveHandler.save();
+	console.log("Finished save!");
 
 	res.status(200).send({ status: 200, msg: "Sections updated!", sections });
 }
