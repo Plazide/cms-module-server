@@ -4,7 +4,9 @@ const sectionSchema = new mongoose.Schema({
 	content: String,
 	page: String,
 	path: String,
-	isPublic: Boolean
+	element: Object,
+	isPublic: { type: Boolean, default: false },
+	lang: String
 });
 
 const Section = mongoose.model("section", sectionSchema);

@@ -4,22 +4,25 @@ class SaveHandler{
 	constructor({ req, res }){
 		this.req = req;
 		this.res = res;
-		/* this.model = Section; */
 		this.status = {};
 	}
 
 	async save(){
 		const sections = this.req.body;
+		const lang = this.req.cookies.lang;
 
 		for(let section of sections){
 			section.content = section.edited_text;
+			section.lang = lang;
 			delete section.edited_text;
 			delete section.original_text;
 
 			const isPublic = false;
 			const path = section.path;
 			const page = section.page;
-			const result = await Section.findOne({ path, page, isPublic }).maxTime(1000)
+			console.log(section);
+
+			const result = await Section.findOne({ path, page, lang, isPublic }).maxTime(1000)
 				.catch( err => console.log(err));
 
 			if(!result)

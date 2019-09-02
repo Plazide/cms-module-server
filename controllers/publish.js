@@ -9,17 +9,22 @@ class PublishHandler{
 
 	async publish(){
 		const sections = this.req.body;
+		const lang = this.req.cookies.lang;
 
 		for(let section of sections){
 			section.content = section.saved_text;
+			section.isPublic = true;
 			delete section.edited_text;
 			delete section.original_text;
 
 			const isPublic = true;
 			const path = section.path;
 			const page = section.page;
-			const result = await Section.findOne({ path, page, isPublic }).maxTime(1000)
+			console.log(section);
+			const result = await Section.findOne({ path, page, lang, isPublic }).maxTime(1000)
 				.catch( err => console.log(err));
+
+			console.log(result);
 
 			if(!result)
 				await this.createSection(section).catch( err => console.log(err));
@@ -31,6 +36,7 @@ class PublishHandler{
 	}
 
 	async createSection(section){
+		console.log(section);
 		await Section.create(section);
 	}
 
