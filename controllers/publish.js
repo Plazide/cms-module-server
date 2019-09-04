@@ -1,13 +1,13 @@
 const Section = require("../models/Section");
 
 class PublishHandler{
-	constructor({ req, res }){
+	constructor ({ req, res }){
 		this.req = req;
 		this.res = res;
 		this.status = {};
 	}
 
-	async publish(){
+	async publish (){
 		const sections = this.req.body;
 		const lang = this.req.cookies.lang;
 
@@ -20,11 +20,8 @@ class PublishHandler{
 			const isPublic = true;
 			const path = section.path;
 			const page = section.page;
-			console.log(section);
 			const result = await Section.findOne({ path, page, lang, isPublic }).maxTime(1000)
 				.catch( err => console.log(err));
-
-			console.log(result);
 
 			if(!result)
 				await this.createSection(section).catch( err => console.log(err));
@@ -35,17 +32,16 @@ class PublishHandler{
 		return sections;
 	}
 
-	async createSection(section){
-		console.log(section);
+	async createSection (section){
 		await Section.create(section);
 	}
 
-	async replaceSection(item, section){
+	async replaceSection (item, section){
 		await item.updateOne(section);
 	}
 }
 
-async function publish(req, res){
+async function publish (req, res){
 	console.log("Starting publish...");
 	const publishHandler = new PublishHandler({ req, res });
 	const sections = await publishHandler.publish();

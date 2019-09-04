@@ -4,7 +4,7 @@ const path = require("path");
 const jsdom = require("jsdom");
 const{ JSDOM } = jsdom;
 
-async function insertContents(req, contents){
+async function insertContents (req, contents){
 	try{
 		const page = req.url;
 		const lang = req.cookies.lang;
@@ -14,19 +14,22 @@ async function insertContents(req, contents){
 		const isPublic = true;
 
 		for(let section of pageSections)
+
 			if(section.lang === lang && (req.authorized || isPublic)){
 				const el = document.querySelector(section.path);
-				el.innerHTML = section.content;
+				if(el)
+					el.innerHTML = section.content;
 			}
 
 		return dom.serialize();
 	}catch (err){
-		throw err;
+		console.error(err);
+		return false;
 	}
 }
 
 module.exports = (dir, options) => {
-	return async(req, res, next) => {
+	return async (req, res, next) => {
 		if(req.method !== "GET"){
 			next();
 			return;
@@ -50,8 +53,11 @@ module.exports = (dir, options) => {
 			}
 
 			const file = `${dir}/${reqFile}`;
-			const fileContents = await fs.readFile(file);
+			const fileContents = await fs.readFile(file, { encoding: "utf-8" });
 			const renderedContents = await insertContents(req, fileContents);
+
+			if(!renderedContents) return next();
+
 			res.send(renderedContents);
 		}catch (err){
 			throw err;
