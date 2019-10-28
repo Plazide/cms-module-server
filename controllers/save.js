@@ -1,4 +1,5 @@
 const Section = require("../models/Section");
+const Page = require("../models/Page");
 
 class SaveHandler{
 	constructor ({ req, res }){
@@ -8,12 +9,22 @@ class SaveHandler{
 	}
 
 	async save (){
-		const sections = this.req.body;
-		const lang = this.req.cookies.lang;
+		const sections = this.req.body.sections;
+		const meta = this.req.body.meta;
+		const lang = this.req.lang;
+		const url = meta.url;
+
+		const pageItem = await Page.findOne({ url });
+
+		if(!pageItem)
+			await Page.create(meta);
+		else
+			await pageItem.updateOne(meta);
 
 		for(let section of sections){
 			section.content = section.edited_text;
 			section.lang = lang;
+			meta.lang = lang;
 			delete section.edited_text;
 			delete section.original_text;
 
@@ -24,10 +35,12 @@ class SaveHandler{
 			const result = await Section.findOne({ path, page, lang, isPublic }).maxTime(1000)
 				.catch( err => console.log(err));
 
-			if(!result)
+			if(!result){
+				section.isPublic = false;
 				await this.createSection(section).catch( err => console.log(err));
-			else
+			}else {
 				await this.replaceSection(result, section).catch( err => console.log(err));
+			}
 		}
 
 		return sections;
