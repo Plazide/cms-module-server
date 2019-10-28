@@ -5,6 +5,7 @@ const pageSchema = new mongoose.Schema({
 	title: String,
 	description: String,
 	keywords: String,
+	canonical: String,
 	lang: String
 });
 
