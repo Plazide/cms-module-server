@@ -12,6 +12,7 @@ function setMeta (doc, lang, meta){
 	doc.title = meta.title;
 	head.querySelector("meta[name=\"description\"]").setAttribute("content", meta.description);
 	head.querySelector("meta[name=\"keywords\"]").setAttribute("content", meta.keywords);
+	head.querySelector("link[rel=\"canonical\"]").setAttribute("href", meta.canonical);
 }
 
 async function insertContents (req, contents){
@@ -49,23 +50,18 @@ module.exports = (dir, options) => {
 		}
 
 		try{
-			let reqFile = req.url === "/" ? "index.html" : req.url.substring(1);
-			if(path.extname(reqFile) !== ".html"){
-				next();
-				return;
-			}
-
+			let reqFile = req.url === "/" ? "index" : req.url.substring(1);
 			const dirFiles = await fs.readdir(dir);
 			const htmlFiles = dirFiles.filter( file => {
 				return path.extname(file) === ".html";
 			});
 
-			if(!htmlFiles.includes(reqFile)){
+			if(!htmlFiles.includes(reqFile + ".html")){
 				next();
 				return;
 			}
 
-			const file = `${dir}/${reqFile}`;
+			const file = `${dir}/${reqFile}.html`;
 			const fileContents = await fs.readFile(file, { encoding: "utf-8" });
 			const renderedContents = await insertContents(req, fileContents);
 
