@@ -33,7 +33,8 @@ async function insertContents (req, contents){
 					el.innerHTML = section.content;
 			}
 
-		setMeta(document, lang, meta);
+		if(meta)
+			setMeta(document, lang, meta);
 
 		return dom.serialize();
 	}catch (err){
