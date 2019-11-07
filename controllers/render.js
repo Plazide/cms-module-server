@@ -12,7 +12,9 @@ function setMeta (doc, lang, meta){
 	doc.title = meta.title;
 	head.querySelector("meta[name=\"description\"]").setAttribute("content", meta.description);
 	head.querySelector("meta[name=\"keywords\"]").setAttribute("content", meta.keywords);
-	head.querySelector("link[rel=\"canonical\"]").setAttribute("href", meta.canonical);
+
+	if(meta.canonical)
+		head.querySelector("link[rel=\"canonical\"]").setAttribute("href", meta.canonical);
 }
 
 async function insertContents (req, contents){
