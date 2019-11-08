@@ -46,6 +46,7 @@ async function publish (req, res){
 	const publishHandler = new PublishHandler({ req, res });
 	const sections = await publishHandler.publish();
 
+	console.log("Finished publish!");
 	res.status(200).send({ status: 200, msg: "Sections updated!", sections });
 }
 
