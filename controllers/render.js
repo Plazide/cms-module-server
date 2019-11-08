@@ -26,10 +26,9 @@ async function insertContents (req, contents){
 		const dom = new JSDOM(contents);
 		const window = dom.window;
 		const document = window.document;
-		const isPublic = true;
 
 		for(let section of pageSections)
-			if(section.lang === lang && (req.authorized || isPublic)){
+			if(req.authorized || section.isPublic){
 				const el = document.querySelector(section.path);
 				if(el)
 					el.innerHTML = section.content;
