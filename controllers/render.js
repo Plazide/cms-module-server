@@ -13,7 +13,7 @@ function setMeta (doc, lang, meta){
 	head.querySelector("meta[name=\"description\"]").setAttribute("content", meta.description);
 	head.querySelector("meta[name=\"keywords\"]").setAttribute("content", meta.keywords);
 
-	if(meta.canonical)
+	if(meta.canonical !== "" && meta.canonical !== null && meta.canonical !== undefined)
 		head.querySelector("link[rel=\"canonical\"]").setAttribute("href", meta.canonical);
 }
 
